@@ -22,7 +22,7 @@ $api->version('v1',function($api){
         $api->post('token','\Laravel\Passport\Http\Controllers\AccessTokenController');   
     });
 
-    $api->group(['namespace'=>'App\http\Controllers','middleware'=>['auth:api','cors']],function($api){
+    $api->group(['namespace'=>'App\Api\Controllers','middleware'=>['auth:api','cors']],function($api){
         //UserController.
         $api->get('users', 'UserController@index');
         $api->post('user/create', 'UserController@store');
