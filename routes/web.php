@@ -28,7 +28,7 @@ $api->version('v1',function($api){
         $api->post('user/create', 'UserController@store');
         $api->get('user', 'UserController@show');
         $api->post('user/update', 'UserController@update');
-        $api->delete('user/delete', 'UserController@destroy');
+        $api->post('user/delete', 'UserController@destroy');
         $api->post('user/search/by', 'UserController@search');
     });
 });

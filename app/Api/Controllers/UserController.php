@@ -101,6 +101,17 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
         $payload = $request->all();
         if (isset($payload['password']) && ! empty($payload['password'])) {
             $payload['password'] = Hash::make($payload['password']);
@@ -127,6 +138,17 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     { 
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
         $response = User::destroy($request->user_id);
 
         if ($response) {

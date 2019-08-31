@@ -90,9 +90,10 @@ $app->register(App\Providers\EventServiceProvider::class);
 // Finally register two service providers - original one and Lumen adapter
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
-Dusterio\LumenPassport\LumenPassport::routes(app());
+Dusterio\LumenPassport\LumenPassport::routes(app()->router);
 $app->register(Barryvdh\Cors\ServiceProvider::class);
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+$app->register(Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +107,7 @@ $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Api\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
