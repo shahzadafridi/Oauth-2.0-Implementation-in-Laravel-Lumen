@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Route;
 
-class UserController extends Controller
+class ApiController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -62,13 +62,11 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'registration',
                 'status' => 'error',
                 'message' => $validator->errors()->first(),
-            );
-            $decode_data = json_decode(json_encode($data), true);
-            return view('pages.home')->withData($decode_data);
+            ]);
         }
 
         $payload = $request->all();
@@ -76,20 +74,18 @@ class UserController extends Controller
         $response = User::create($payload);
 
         if ($response) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'registration',
                 'status' => 'success',
                 'message' => 'Resource added successfully'
-            );
+            ]);
         } else {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'registration',
                 'status' => 'fail',
                 'message' => 'Unable to create resource'
-            );
+            ]);
         }
-
-        return view('pages.home')->withData($data);
     }
 
     /**
@@ -106,35 +102,30 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'login',
                 'status' => 'error',
                 'message' => $validator->errors()->first(),
-            );
-
-            $decode_data = json_decode(json_encode($data), true);
-            return view('pages.home')->withData($decode_data);
+            ]);
         }
 
         $user = User::where('email', $request->email)->first();
 
         if (!empty($user) && password_verify($request->password, $user->password)) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'login',
                 'status' => 'success',
                 'email' => $user->email,
                 'token' => $user->token,
                 'refresh_token' => $user->refresh_token,
-            );
+            ]);
         } else {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'login',
                 'status' => 'fail',
                 'message' => 'Authentication failed.'
-            );
+            ]);
         }
-
-        return view('pages.home')->withData($data);
     }
 
     /**
@@ -217,10 +208,10 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $data = array(
+            return response()->json([
                 'status' => 'error',
                 'message' => $validator->errors()->first(),
-            );
+            ]);
         }
 
         return response()->json([
@@ -241,14 +232,11 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'token',
                 'status' => 'error',
                 'message' => $validator->errors()->first(),
-            );
-
-            $decode_data = json_decode(json_encode($data), true);
-            return view('pages.home')->withData($decode_data);
+            ]);
         }
 
         $data = [
@@ -272,7 +260,7 @@ class UserController extends Controller
                 $user->refresh_token = $rData->refresh_token;
                 $user->token = $rData->access_token;
                 $user->save();
-                $data = array(
+                return response()->json([
                     "user_id" => $user->id,
                     "api_type" => 'token',
                     "status" => 'success',
@@ -280,25 +268,21 @@ class UserController extends Controller
                     "expires_in" => $rData->expires_in,
                     "access_token" => $rData->access_token,
                     "refresh_token" => $rData->refresh_token
-                );
+                ]);
             } else {
-                $data = array(
+                return response()->json([
                     "api_type" => 'token',
                     "status" => 'failed',
                     "message" => 'User not found.',
-                );
+                ]);
             }
         } else {
-            $data = array(
+            return response()->json([
                 "api_type" => 'token',
                 "status" => 'failed',
                 "message" => 'failed to generate token. Make sure you have entered valid client_id, client_secret, username as a email and password.',
-            );
+            ]);
         }
-
-        $decode_data = json_decode(json_encode($data), true);
-
-        return view('pages.home')->withData($decode_data);
     }
 
     public function getRefreshToken(Request $request)
@@ -310,14 +294,11 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $data =  array(
+            return response()->json([
                 "api_type" => 'refresh_token',
                 'status' => 'error',
                 'message' => $validator->errors()->first(),
-            );
-
-            $decode_data = json_decode(json_encode($data), true);
-            return view('pages.home')->withData($decode_data);
+            ]);
         }
 
         $user = User::find($request->user_id);
@@ -331,8 +312,6 @@ class UserController extends Controller
             'scope' => '*'
         ];
 
-
-
         $httpRequest = Request::create('/oauth/token', 'POST', $data);
         $response = app()->handle($httpRequest);
         $rData = json_decode($response->getContent());
@@ -341,24 +320,20 @@ class UserController extends Controller
             $payload['token'] =  $rData->access_token;
             $payload['refresh_token'] =  $rData->refresh_token;
             $user->update($payload);
-            $data = array(
+            return response()->json([
                 "api_type" => 'refresh_token',
                 'status' => 'success',
                 "token_type" => $rData->token_type,
                 "expires_in" => $rData->expires_in,
                 "access_token" => $rData->access_token,
                 "refresh_token" => $rData->refresh_token
-            );
+            ]);
         } else {
-            $data = array(
+            return response()->json([
                 "api_type" => 'refresh_token',
                 "status" => 'failed',
                 "message" => 'Invalid token given, token refresh failed.',
-            );
+            ]);
         }
-
-        $decode_data = json_decode(json_encode($data), true);
-
-        return view('pages.home')->withData($decode_data);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use Dusterio\LumenPassport\LumenPassport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
@@ -24,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
         // LumenPassport::tokensExpireIn(Carbon::now()->addHour(24)); 
         LumenPassport::tokensExpireIn(Carbon::now()->addWeek(1));
         Schema::defaultStringLength(191);
+        view()->share('key', 'value');
     }
 }

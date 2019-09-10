@@ -27,6 +27,7 @@ $app->withEloquent();
 
 $app->configure('auth');
 $app->configure('cors');
+$app->configure('tokenChecker');
 
 /*
 |--------------------------------------------------------------------------
@@ -60,9 +61,9 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+   'tokenChecker' => App\Http\Middleware\TokenChecker::class,
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,

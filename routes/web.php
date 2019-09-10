@@ -11,25 +11,51 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+Route::get('/', function () {
+    // return view('pages.home');
 });
+
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1',function($api){
-    $api->group(['prefix'=>'oauth'],function($api){
-        $api->post('token','\Laravel\Passport\Http\Controllers\AccessTokenController');   
+$api->version('v1', function ($api) {
+    $api->group(['prefix' => 'oauth'], function ($api) {
+        // $api->post('token','App\Api\Controllers\UserController@getToken');   
     });
 
-    $api->group(['namespace'=>'App\Api\Controllers','middleware'=>['auth:api','cors']],function($api){
+    $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['auth:api', 'cors']], function ($api) {
         //UserController.
         $api->get('users', 'UserController@index');
-        $api->post('user/create', 'UserController@store');
         $api->get('user', 'UserController@show');
         $api->post('user/update', 'UserController@update');
         $api->post('user/delete', 'UserController@destroy');
         $api->post('user/search/by', 'UserController@search');
     });
+    $api->post('user/login', 'App\Api\Controllers\UserController@login');
+    $api->post('user/create', 'App\Api\Controllers\UserController@store');
+    $api->post('token', 'App\Api\Controllers\UserController@getToken');
+    
+    $api->group(['namespace' => 'App\Api\UserController', 'middleware' => ['tokenChecker']], function ($api) {
+        $api->post('refreshToken', 'ApiController@getRefreshToken');
+    });
+
+    $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['auth:api', 'cors']], function ($api) {
+        //UserController.
+        $api->get('backend/users', 'ApiController@index');
+        $api->get('backend/user', 'ApiController@show');
+        $api->post('backend/user/update', 'ApiController@update');
+        $api->post('backend/user/delete', 'ApiController@destroy');
+        $api->post('backend/user/search/by', 'ApiController@search');
+        $api->post('backend/user/login', 'ApiController@login');
+        $api->post('backend/user/create', 'ApiController@store');
+    });
+
+    $api->post('backend/token', 'App\Api\Controllers\ApiController@getToken');
+
+    $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['tokenChecker']], function ($api) {
+        $api->post('backend/refreshToken', 'ApiController@getRefreshToken');
+    });
+
 });
 
+Route::get('home', 'PagesController@home');

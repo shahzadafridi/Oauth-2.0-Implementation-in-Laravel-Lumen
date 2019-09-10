@@ -15,18 +15,10 @@ class User extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('firstName');
-            $table->string('lastName');
-            $table->string('username');
             $table->string('password');
-            $table->string('odl_password');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('type');
-            $table->string('companyId');
-            $table->string('emailVerifyToken');
-            $table->string('emailVerified');
-            $table->string('enabled');
+            $table->text('token');
+            $table->text('refresh_token');
             $table->timestamps();
         });
     }

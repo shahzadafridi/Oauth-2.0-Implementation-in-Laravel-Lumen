@@ -10,7 +10,11 @@
         "barryvdh/laravel-cors": "^0.11.4",
         "dingo/api": "^2",
         "dusterio/lumen-passport": "^0.2.14",
-        "laravel/lumen-framework": "5.8.*"
+        "fabpot/goutte": "^3.2",
+        "guzzlehttp/guzzle": "^6.3",
+        "laravel/lumen-framework": "5.8.*",
+        "laravelcollective/html": "^5.4.0",
+        "mlntn/lumen-artisan-serve": "~1"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
