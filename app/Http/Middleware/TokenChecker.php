@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Middleware;
-
 use App\User;
 use Closure;
 
@@ -16,9 +15,10 @@ class TokenChecker
      */
     public function handle($request, Closure $next)
     {
+        $header = $request->header('Authorization');
 
-        if ($request->json != null) {
-            $user = User::where('email', $request->username)->first();
+        if ($header != null) {
+            $user = User::where('id', $request->user_id)->first();
             $token = $user->token;
             if ($token != null) {
                 $data = array(

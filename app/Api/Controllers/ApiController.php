@@ -248,7 +248,6 @@ class ApiController extends Controller
             'scope' => '*'
         ];
 
-
         $user = User::where('email', $request->username)->first();
 
         $httpRequest = Request::create('/oauth/token', 'POST', $data);
@@ -321,8 +320,6 @@ class ApiController extends Controller
             $payload['refresh_token'] =  $rData->refresh_token;
             $user->update($payload);
             return response()->json([
-                "api_type" => 'refresh_token',
-                'status' => 'success',
                 "token_type" => $rData->token_type,
                 "expires_in" => $rData->expires_in,
                 "access_token" => $rData->access_token,
@@ -330,7 +327,6 @@ class ApiController extends Controller
             ]);
         } else {
             return response()->json([
-                "api_type" => 'refresh_token',
                 "status" => 'failed',
                 "message" => 'Invalid token given, token refresh failed.',
             ]);

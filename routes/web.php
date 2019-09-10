@@ -34,9 +34,9 @@ $api->version('v1', function ($api) {
     $api->post('user/login', 'App\Api\Controllers\UserController@login');
     $api->post('user/create', 'App\Api\Controllers\UserController@store');
     $api->post('token', 'App\Api\Controllers\UserController@getToken');
-    
-    $api->group(['namespace' => 'App\Api\UserController', 'middleware' => ['tokenChecker']], function ($api) {
-        $api->post('refreshToken', 'ApiController@getRefreshToken');
+
+    $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['checkToken']], function ($api) {
+        $api->post('refreshToken', 'UserController@getRefreshToken');
     });
 
     $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['auth:api', 'cors']], function ($api) {
@@ -48,13 +48,10 @@ $api->version('v1', function ($api) {
         $api->post('backend/user/search/by', 'ApiController@search');
         $api->post('backend/user/login', 'ApiController@login');
         $api->post('backend/user/create', 'ApiController@store');
+        $api->post('backend/refreshToken', 'ApiController@getRefreshToken');
     });
 
     $api->post('backend/token', 'App\Api\Controllers\ApiController@getToken');
-
-    $api->group(['namespace' => 'App\Api\Controllers', 'middleware' => ['tokenChecker']], function ($api) {
-        $api->post('backend/refreshToken', 'ApiController@getRefreshToken');
-    });
 
 });
 
