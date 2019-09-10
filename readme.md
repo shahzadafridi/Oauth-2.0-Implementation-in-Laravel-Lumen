@@ -10,7 +10,7 @@ Laravel Lumen is a stunningly fast PHP micro-framework for building web applicat
 
 ## Postman collection of API's
 
-Explore api from postman documentation. [Here is the complete Postman documentation](https://documenter.getpostman.com/view/6546553/SVfRuU3L?version=latest).
+Explore api from postman documentation. [Here is the complete Postman documentation](https://documenter.getpostman.com/view/4771623/SVfRuoJ1?version=latest).
 
 ## License
 
