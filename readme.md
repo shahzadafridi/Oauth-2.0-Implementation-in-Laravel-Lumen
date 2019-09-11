@@ -8,8 +8,10 @@
 
 Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
 
-## Client id and Client Secret
+## Client id
 Client_id : 2
+
+## Client Secret
 Client_secret: j2kC50ZbHolBQsle4pa7yr7zUxXPrQXUeInkIrel
 
 # Demo Site
