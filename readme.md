@@ -44,7 +44,7 @@ Login is not working at the moment. I will updat the code soon.
 
 Explore api from postman documentation. [Here is the complete Postman documentation](https://documenter.getpostman.com/view/4771623/SVfRuoJ1?version=latest).
 
-#database
+# database
 This is Oauth table. You can use this clinet_id as column name id and client_secret in order to generate token.
 ![Database - Oauth Table](https://i.imgur.com/g8bdYRI.png)
 
