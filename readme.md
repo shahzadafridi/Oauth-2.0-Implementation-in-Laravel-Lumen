@@ -8,6 +8,9 @@
 
 Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
 
+## Client id and Client Secret
+Client_id : 2
+Client_secret: j2kC50ZbHolBQsle4pa7yr7zUxXPrQXUeInkIrel
 
 # Demo Site
 here is the demo site where you can interact with ouath 2 api.
@@ -23,7 +26,16 @@ here is the demo site where you can interact with ouath 2 api.
 ## Refresh Token 
 There is a minior bug in url. To Refresh token, just back to home [Click home](https://shahzadafridi10.000webhostapp.com/home) page then do refersh token operation.
 
+refrest_token: At time of new token generation then there is two keys one is token and second is refresh token so to refresh token then pass the last time generated token api -> refesh token. It will work only one time.
+
+e-g 
+
+If I pass refresh token of last time generated token api -> refresh token. It will give me new token and refersh token so next time we will use these.
+
 ![Oauth - Refresh Token](https://i.imgur.com/Sh8mEaK.png)
+
+## Login
+Login is not working at the moment. I will updat the code soon.
 
 
 # Postman collection of API's
